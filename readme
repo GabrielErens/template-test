@@ -1,3 +1,3 @@
-git all .
+git add .
 git commit -m ''
 git push master origin
