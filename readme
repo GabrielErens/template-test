@@ -1,3 +1,3 @@
 git all .
 git commit -m ''
-git commit master origin
+git push master origin
