@@ -8,13 +8,15 @@ let apiQuotes = [];
 
 // Gets Quotes From Api
 async function getQuotes() {
-  const apiUrl = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
+    const apiUrl = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
   try {
     const response = await fetch(apiUrl);
     apiQuotes = await response.json();
     newQuote();
   } catch (error) {
-    // Catch Error Here
+    // Catch Error Here fetches data from localQuotes.js if API is down
+    apiQuotes = localQuotes;
+    newQuote();
   }
 }
 
@@ -22,7 +24,7 @@ async function getQuotes() {
 function newQuote() {
   // Pick random quote from API Quotes Array
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
-  // Check if Author fiels has value
+  // Check if Author fields has value
   if (quote.author === null) {
     authorText.textContent = "Unknown";
   } else {
@@ -38,14 +40,14 @@ function newQuote() {
 }
 
 // Tweet Quote
-function tweetQuote(){
-    const twitterUrl =`https://twitter.com/intent/tweet?text=${quoteText.textContent} 
+function tweetQuote() {
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent} 
     - ${authorText.textContent}`;
-    window.open(twitterUrl, '_blank');
+  window.open(twitterUrl, "_blank");
 }
 
 // Event listeners
-newQuoteBtn.addEventListener('click', getQuotes);
-twitterBtn.addEventListener('click',tweetQuote);
+newQuoteBtn.addEventListener("click", getQuotes);
+twitterBtn.addEventListener("click", tweetQuote);
 // On Load
 getQuotes();
