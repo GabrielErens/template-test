@@ -4,19 +4,35 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
+const loader = document.getElementById('loader');
 let apiQuotes = [];
 
+
+function showLoadingSpinner(){
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+function removeLoadingSpinner(){
+    if(!loader.hidden){
+        quoteContainer.hidden = false;
+        loader.hidden = true;
+
+    }
+}
 // Gets Quotes From Api
 async function getQuotes() {
+    showLoadingSpinner();
     const apiUrl = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
   try {
     const response = await fetch(apiUrl);
-    apiQuotes = await response.json();
+    apiQuotes = await response.json();    
     newQuote();
+    removeLoadingSpinner();
   } catch (error) {
     // Catch Error Here fetches data from localQuotes.js if API is down
     apiQuotes = localQuotes;
     newQuote();
+    removeLoadingSpinner();
   }
 }
 
@@ -51,3 +67,4 @@ newQuoteBtn.addEventListener("click", getQuotes);
 twitterBtn.addEventListener("click", tweetQuote);
 // On Load
 getQuotes();
+
